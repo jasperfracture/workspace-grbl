@@ -78,7 +78,7 @@ cpdefine("inline:com-chilipeppr-workspace-jf2", ["chilipeppr_ready"], function()
             this.addBillboardToWorkspaceMenu();
 
             //chilipeppr.publish('/com-chilipeppr-elem-flashmsg/flashmsg', "Recent Maintenance", "Hello!  We recently updated the GRBL workspace.  Please let us know if you have any issues.  If auto-level still does not work, please continue to use chilipeppr.com/imania. But we'd really like to hear if it does! ", 15 * 1000);
-
+            this.loadFont2Gcode();
             // Setup an event to react to window resize. This helps since
             // some of our widgets have a manual resize to cleanly fill
             // the height of the browser window. You could turn this off and
@@ -234,6 +234,31 @@ cpdefine("inline:com-chilipeppr-workspace-jf2", ["chilipeppr_ready"], function()
             );
         },
 
+           /**
+         * Load the workspace menu and show the pubsubviewer and fork links using
+         * our pubsubviewer widget that makes those links for us.
+         */
+        loadFont2Gcode: function(callback) {
+            var that = this;
+            
+            chilipeppr.load(
+              "#com-chilipeppr-f2gc-instance",
+              "http://raw.githubusercontent.com/chilipeppr/widget-font2gcode/master/auto-generated-widget.html",
+              function() {
+                // Callback after widget loaded into #myDivComZipwhipWidgetFont2gcode
+                // Now use require.js to get reference to instantiated widget
+                cprequire(
+                  ["inline:com-zipwhip-widget-font2gcode"], // the id you gave your widget
+                  function(myObjComZipwhipWidgetFont2gcode) {
+                    // Callback that is passed reference to the newly loaded widget
+                    console.log("Widget / Font2Gcode just got loaded.", myObjComZipwhipWidgetFont2gcode);
+                    myObjComZipwhipWidgetFont2gcode.init();
+                  }
+                );
+              }
+            );
+
+        },
 
         loadWidgets: function(callback) {
 
